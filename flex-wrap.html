@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #container {
+        display: flex;
+        margin: 0px auto;
+        width: 1800px;
+        height: 300px;
+        flex-wrap: nowrap;
+        background-color: palegreen;
+      }
+      .item {
+        background-color: red;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
+        width: 1550px;
+        height: 100px;
+      }
+    </style>
+    <script>
+      var arr = [1,2,3,4,5];
+      let arr1 = arr.map(item => {
+        if(item>2) {
+          return item*2;
+        } else {
+          return item;
+        }
+      })
+      console.log(arr);
+      console.log(arr1);
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="item">1</div>
+      <div class="item">2</div>
+      <div class="item">3</div>
+      <div class="item">4</div>
+    </div>
+  </body>
+</html>

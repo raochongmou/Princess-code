@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+        body{
+            background-color: #182327;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body style="background-color: #fff;">
+    <canvas width="1300" height="800">
+    </canvas>
+    <script>
+        var oCanvas=document.querySelector('canvas')
+        var ctx=oCanvas.getContext('2d')
+        var amount=200;//创建点的个数
+        var arr=[];//定义一个数组存每个点移动的数据；
+        
+        var range=100;
+        var first=true;
+        //循环创建移动的点
+        for( var i=0;i<amount;i++){
+            arr.push({
+                x:rnd(0,oCanvas.width),
+                y:rnd(0,oCanvas.height),
+                speedX:rndSign()*rnd(1,3)*0.5,
+                speedY:rndSign()*rnd(1,3)*0.5,
+                r:rnd(1,4)                    
+            })    
+        }
+        setInterval(function(){
+            //先清除画布区域；解决重复绘制的问题
+            ctx.clearRect(0,0,oCanvas.width,oCanvas.height);
+            arr.forEach(function(dot,index){
+                //开始绘制图形
+                ctx.beginPath();
+                ctx.fillStyle='rgb(141,134,32)';
+                var {
+                    x,
+                    y,
+                    r,
+                    speedX,
+                    speedY    
+                }=dot;    
+                ctx.arc(x,y,r,0,2*Math.PI,false);
+                ctx.fill();
+                dot.x+=speedX;
+                dot.y+=speedY;
+                //限定点移动的范围
+                if(dot.x<0||dot.x>oCanvas.width-r){
+                    dot.speedX*=-1    
+                }
+                
+                if(dot.y<0||dot.y>oCanvas.height-r){
+                    dot.speedY*=-1    
+                }
+            })    
+    //
+    arr.forEach(function(dot,index){
+        for(let i=index;i<arr.length;i++){
+          //求出两点之间距离，用于判断是否连线
+          var distance = Math.sqrt(Math.pow(dot.x - arr[i].x,2) + Math.pow(dot.y - arr[i].y,2))    
+          //判断什么时候连线
+          if(distance<range){
+            ctx.beginPath();
+            ctx.moveTo(dot.x,dot.y);
+            ctx.lineTo(arr[i].x,arr[i].y);
+            ctx.strokeStyle=`rgba(141,134,32,${1-distance/range})`;
+            ctx.stroke();    
+          }
+        }    
+    });
+    },16);
+    //当鼠标移动上去点跟着走
+    document.onmousemove=function({clientX,clientY}){      
+        //判断第一次移上去
+        if(first){
+            first=false;
+            arr.push({
+                x:clientX,
+                y:clientY,
+                speedX:0,
+                speedY:0,
+                r:1    
+            })    
+        }else{
+            arr[0].x=clientX;
+            arr[0].y=clientY;    
+        }
+    }
+    //随机函数
+    function rnd(n,m){
+      return parseInt(Math.random()*(m-n)+n)
+    }
+    //解决点移动方向函数
+    function rndSign(){
+      return Math.random() > 0.5 ? 1 : -1;
+    }
+    </script>
+</body>
+</html>

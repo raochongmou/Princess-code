@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+ <html lang="en">
+ <head>
+ <meta charset="utf-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+ <title>canvas</title>
+ <style>
+  .canvas {
+    background-color: #fff;
+    display: block;
+    margin: 30px auto;
+  }
+  body {
+    background-color: #000;
+  }
+ </style>
+ <body>
+  <canvas id="diagonal" width="1000" height="1000" class="canvas" />
+ </body>
+ <script>
+  const ctx = document.getElementById("diagonal");
+  const context = ctx.getContext("2d");
+  context.beginPath();
+  context.lineWidth = "10";
+  context.strokeStyle = "#333";
+  context.arc(250, 250, 100, 33*Math.PI/180, Math.PI, true);
+  context.fillStyle = "#abcdef";
+  context.fill();
+  context.stroke();
+  context.closePath();
+  context.beginPath();
+  context.fillRect(350, 350, 200, 100);
+  context.closePath();
+ </script>
+ </head>
+ </html>
+ </body>
+ </html>
